@@ -37,7 +37,7 @@
      <string>清除</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="btAddWord">
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -47,7 +47,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>换一批</string>
+     <string>添加单词</string>
     </property>
    </widget>
    <widget class="Line" name="line">
@@ -71,6 +71,19 @@
       <width>241</width>
       <height>471</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>40</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>换一批</string>
     </property>
    </widget>
   </widget>

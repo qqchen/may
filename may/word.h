@@ -1,18 +1,23 @@
 #ifndef WORD_H
 #define WORD_H
 #include "date.h"
-#include "../third/jsoncpp/include/json/json.h"
+#include "JsonObject.h"
 
 namespace may {
 
 /***********************************
  * 用于描述英文单词
  * *********************************/
-class Word
+class Word : public JsonObject
 {
 public:
+    Word();
     Word(std::string& word);
     Word(std::string &word, std::string& meaning);
+
+    virtual void init_keys();
+    virtual Json::Value serialize();
+    virtual bool deserialize(Json::Value root);
 
     void SetMeaning(std::string& meaning);
     void SetRecentlyDate(Date& date);

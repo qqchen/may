@@ -9,11 +9,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    m_addWordDialog = new AddWordDialog(this);
     wordNum = 13;
     std::vector<std::string> words;
     InitWords(wordNum, words);
     CreateWordLayout(wordNum, words);
     connect(ui->btClearWord, SIGNAL(clicked(bool)), this, SLOT(ClearWords()));
+    connect(ui->btAddWord, SIGNAL(pressed()), this, SLOT(ShowAddEnglishWord()));
+    connect(m_addWordDialog, SIGNAL(SignalAddWord(QString&, QString&)), this, SLOT(AddEnglishWord(QString&,QString&)));
+    m_db = new may::JsonDB();
 }
 
 MainWindow::~MainWindow()
@@ -32,6 +36,18 @@ void MainWindow::ClearWords()
     {
         leWords[i]->clear();
     }
+
+}
+
+void MainWindow::ShowAddEnglishWord()
+{
+    m_addWordDialog->show();
+}
+
+void MainWindow::AddEnglishWord(QString &en, QString &chinese)
+{
+    m_db->AddWord(en.toStdString(), chinese.toStdString());
+    m_db->Save(std::string("test.json"));
 
 }
 

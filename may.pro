@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     third/jsoncpp/lib_json/json_reader.cpp \
     third/jsoncpp/lib_json/json_value.cpp \
     third/jsoncpp/lib_json/json_valueiterator.inl \
-    third/jsoncpp/lib_json/json_writer.cpp
+    third/jsoncpp/lib_json/json_writer.cpp \
+    addworddialog.cpp
 
 HEADERS  += mainwindow.h \
     may/config.h \
@@ -40,9 +41,13 @@ HEADERS  += mainwindow.h \
     third/jsoncpp/include/json/version.h \
     third/jsoncpp/include/json/writer.h \
     third/jsoncpp/lib_json/json_tool.h \
-    third/jsoncpp/lib_json/version.h.in
+    third/jsoncpp/lib_json/version.h.in \
+    addworddialog.h
 
-FORMS    += mainwindow.ui
+INCLUDEPATH += . third/jsoncpp/include third/jsoncpp/include/json
+
+FORMS    += mainwindow.ui \
+    addworddialog.ui
 
 DISTFILES += \
     third/jsoncpp/lib_json/sconscript \

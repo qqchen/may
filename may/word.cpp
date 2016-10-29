@@ -2,6 +2,18 @@
 
 namespace may {
 
+Word::Word()
+{
+    m_word = "";
+    m_phonogram = "";
+    m_meaning = "";
+    m_addDate = Date::CurrentDate();
+    m_recentlyDate = Date::CurrentDate();
+    m_rightCount = 0;
+    m_wrongCount = 0;
+    m_isMaster = false;
+}
+
 Word::Word(std::string &word) : m_word(word)
 {
     m_phonogram = "";
@@ -23,6 +35,55 @@ Word::Word(std::string &word, std::string &meaning)
     m_rightCount = 0;
     m_wrongCount = 0;
     m_isMaster = false;
+}
+
+void  Word::init_keys()
+{
+    m_keys.push_back("word");
+    m_keys.push_back("meaning");
+    m_keys.push_back("addDate");
+    m_keys.push_back("recentlyDate");
+    m_keys.push_back("rightCount");
+    m_keys.push_back("wrongCount");
+    m_keys.push_back("isMaster");
+}
+
+Json::Value Word::serialize()
+{
+    Json::Value root;
+    root["word"]         = m_word;
+    root["meaning"]      = m_meaning;
+    root["addDate"]      = m_addDate.toString();
+    root["recentlyDate"] = m_recentlyDate.toString();
+    root["rightCount"]   = m_rightCount;
+    root["wrongCount"]   = m_wrongCount;
+    root["isMaster"]     = m_isMaster ? 1 : 0;
+    return root;
+}
+
+bool Word::deserialize(Json::Value root)
+{
+    if(root.isNull() || parse_error(root))
+    {
+        return false;
+    }
+
+    Json::Value val = root["word"];
+    m_word = val.asString();
+    val = root["meaning"];
+    m_meaning = val.asString();
+    val = root["addDate"];
+    m_addDate = Date(val.asString());
+    val = root["recentlyDate"];
+    m_recentlyDate = Date(val.asString());
+    val = root["rightCount"];
+    m_rightCount = val.asInt();
+    val = root["wrongCount"];
+    m_wrongCount = val.asInt();
+    val = root["isMaster"];
+    m_isMaster = val.asInt() == 0;
+
+    return true;
 }
 
 void Word::SetMeaning(std::string &meaning)
@@ -52,7 +113,9 @@ void Word::SetIsMaster(bool master)
 
 bool Word::IsRight(std::string &word)
 {
-    word == m_word ? AddRightCount() : AddWrongCount();
+    bool isRight = word == m_word;
+    isRight ? AddRightCount() : AddWrongCount();
+    return isRight;
 }
 
 std::string Word::GetWord()

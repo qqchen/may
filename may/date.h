@@ -1,13 +1,17 @@
 #ifndef DATE_H
 #define DATE_H
 
-namespace {
+#include <string>
+
+namespace may{
 
 class Date
 {
 public:
     Date();
+    Date(std::string& date);
     static Date CurrentDate();
+    std::string toString();
 
     int m_year;
     int m_month;

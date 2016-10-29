@@ -7,10 +7,22 @@ Date::Date()
 
 }
 
-Date Date::CurrentDate()
+Date::Date(std::string& date)
 {
 
 }
+
+Date Date::CurrentDate()
+{
+    return Date();
+}
+
+std::string Date::toString()
+{
+    return std::string("2016/10/29");
+}
+
+
 
 }
 
