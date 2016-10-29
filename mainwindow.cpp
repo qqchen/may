@@ -18,11 +18,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->btAddWord, SIGNAL(pressed()), this, SLOT(ShowAddEnglishWord()));
     connect(m_addWordDialog, SIGNAL(SignalAddWord(QString&, QString&)), this, SLOT(AddEnglishWord(QString&,QString&)));
     m_db = new may::JsonDB();
+    m_db->Load(std::string("test.json"));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete m_addWordDialog;
+    delete m_db;
 }
 
 void MainWindow::ShowText()

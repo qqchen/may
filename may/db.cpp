@@ -36,12 +36,14 @@ JsonDB::~JsonDB()
 bool JsonDB::Load(std::string &dbfile)
 {
     bool loadSuccess = read(dbfile);
+    //std::cout << "[Json::Load] : size  : " << m_datas.size() << std::endl;
+    //std::cout << "[Json::Load] : state : " << loadSuccess << std::endl;
     return loadSuccess;
 }
 
 bool JsonDB::Save(std::string& dbfile)
 {
-    std::cout << "[Json::Save] " << dbfile << std::endl;
+    //std::cout << "[Json::Save] " << dbfile << std::endl;
     write(dbfile);
     return true;
 }
@@ -56,7 +58,6 @@ Json::Value JsonDB::serialize()
         if (date.empty() || oneDateData.empty())
             continue;
 
-        Json::Value dateVal;
         Json::Value wordVal;
         for (size_t  i = 0; i < oneDateData.size(); ++i)
         {
@@ -65,7 +66,7 @@ Json::Value JsonDB::serialize()
                 wordVal.append(pWord->serialize());
         }
         Json::Value val;
-        val["date"] = dateVal;
+        val["date"] = date;
         val["word"] = wordVal;
         root.append(val);
     }
@@ -77,24 +78,26 @@ bool JsonDB::deserialize(Json::Value root)
     if (root.isNull())
         return false;
 
+    //std::cout << "[JsonDB::deserialize] : root size : " << root.size() << std::endl;
     for (auto i = 0; i < root.size(); ++i)
     {
-        Json::Value& val = root[i];
-        Json::Value& dateVal = val["date"];
-        Json::Value& wordVal = val["word"];
+        Json::Value val = root[i];
+        Json::Value dateVal = val["date"];
+        Json::Value wordVal = val["word"];
         if (dateVal.isNull() || wordVal.isNull())
             continue;
         std::string date = dateVal.asString();
         std::vector<Word*> oneDateWords;
         for (auto j = 0; j < wordVal.size(); ++j)
         {
-            Json::Value& oneWordVal = wordVal[j];
+            Json::Value oneWordVal = wordVal[j];
             if (oneWordVal.isNull())
                 continue;
             Word* pWord = new Word();
             pWord->deserialize(oneWordVal);
             oneDateWords.push_back(pWord);
         }
+        //std::cout << "[JsonDB::deserialize] : " << date << " " << oneDateWords.size() << std::endl;
         if (date.empty() || oneDateWords.empty())
             continue;
         m_datas.insert(std::pair<std::string, std::vector<Word*> >(date, oneDateWords));
@@ -108,6 +111,8 @@ void JsonDB::AddWord(std::string &word, std::string &meaning)
     std::cout << "[Json::AddWord] : " << word << ", " << meaning << std::endl;
 
     std::string date = Date::CurrentDate().toString();
+    std::cout << "[Json::AddWord] : current date : " << date << std::endl;
+
     auto iter = m_datas.find(date);
     if (iter != m_datas.end())
     {
