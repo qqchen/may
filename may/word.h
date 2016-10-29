@@ -1,6 +1,7 @@
 #ifndef WORD_H
 #define WORD_H
 #include "date.h"
+#include "../third/jsoncpp/include/json/json.h"
 
 namespace may {
 

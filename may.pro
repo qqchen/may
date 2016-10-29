@@ -15,11 +15,36 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     may/word.cpp \
-    may/date.cpp
+    may/date.cpp \
+    may/db.cpp \
+    third/jsoncpp/lib_json/json_reader.cpp \
+    third/jsoncpp/lib_json/json_value.cpp \
+    third/jsoncpp/lib_json/json_valueiterator.inl \
+    third/jsoncpp/lib_json/json_writer.cpp
 
 HEADERS  += mainwindow.h \
     may/config.h \
     may/word.h \
-    may/date.h
+    may/date.h \
+    may/db.h \
+    may/JsonObject.h \
+    third/jsoncpp/include/json/allocator.h \
+    third/jsoncpp/include/json/assertions.h \
+    third/jsoncpp/include/json/autolink.h \
+    third/jsoncpp/include/json/config.h \
+    third/jsoncpp/include/json/features.h \
+    third/jsoncpp/include/json/forwards.h \
+    third/jsoncpp/include/json/json.h \
+    third/jsoncpp/include/json/reader.h \
+    third/jsoncpp/include/json/value.h \
+    third/jsoncpp/include/json/version.h \
+    third/jsoncpp/include/json/writer.h \
+    third/jsoncpp/lib_json/json_tool.h \
+    third/jsoncpp/lib_json/version.h.in
 
 FORMS    += mainwindow.ui
+
+DISTFILES += \
+    third/jsoncpp/lib_json/sconscript \
+    third/jsoncpp/include/CMakeLists.txt \
+    third/jsoncpp/lib_json/CMakeLists.txt
