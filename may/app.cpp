@@ -4,7 +4,7 @@ namespace may {
 
 app::app()
 {
-    m_db = new DB();
+    m_db = new JsonDB();
 
 }
 
@@ -15,17 +15,17 @@ app::~app()
 
 bool app::Load(std::string &dbfile)
 {
-    m_db->Load(dbfile);
+    return m_db->Load(dbfile);
 }
 
 bool app::Save(std::string& dbfile)
 {
-    m_db->Save(dbfile);
+    return m_db->Save(dbfile);
 }
 
-void app::AddWord(std::string& word, std::string& meaning)
+bool app::AddWord(std::string& word, std::string& meaning)
 {
-    m_db->AddWord(word, meaning);
+    return m_db->AddWord(word, meaning);
 }
 
 }

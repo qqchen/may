@@ -7,8 +7,8 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <qstring.h>
-#include "may/db.h"
 #include "addworddialog.h"
+#include "may/app.h"
 
 namespace Ui {
 class MainWindow;
@@ -38,7 +38,7 @@ private:
     std::vector<QLineEdit*> leWords;
     std::vector<QLabel*> lbWords;
     int wordNum;
-    may::DB* m_db;
+    may::app* m_app;
 };
 
 #endif // MAINWINDOW_H

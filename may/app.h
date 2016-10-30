@@ -12,7 +12,7 @@ public:
     ~app();
     bool Load(std::string &dbfile);
     bool Save(std::string& dbfile);
-    void AddWord(std::string& word, std::string& meaning);
+    bool AddWord(std::string& word, std::string& meaning);
 
 private:
     DB* m_db;
