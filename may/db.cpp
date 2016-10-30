@@ -106,12 +106,14 @@ bool JsonDB::deserialize(Json::Value root)
     return true;
 }
 
-void JsonDB::AddWord(std::string &word, std::string &meaning)
+bool JsonDB::AddWord(std::string &word, std::string &meaning)
 {
-    std::cout << "[Json::AddWord] : " << word << ", " << meaning << std::endl;
+    //std::cout << "[Json::AddWord] : " << word << ", " << meaning << std::endl;
 
+    if (HasWord(word))
+        return false;
     std::string date = Date::CurrentDate().toDateString();
-    std::cout << "[Json::AddWord] : current date : " << date << std::endl;
+    //std::cout << "[Json::AddWord] : current date : " << date << std::endl;
 
     auto iter = m_datas.find(date);
     if (iter != m_datas.end())
@@ -131,6 +133,28 @@ void JsonDB::AddWord(std::string &word, std::string &meaning)
             m_datas.insert(std::pair<std::string, std::vector<Word*> >(date, words));
         }
     }
+    return true;
+}
+
+bool JsonDB::HasWord(std::string &word)
+{
+    Word* pWord = FindWord(word);
+    return pWord != NULL;
+}
+
+Word *JsonDB::FindWord(std::string &word)
+{
+    for(auto iter = m_datas.begin(); iter != m_datas.end(); ++iter)
+    {
+        std::vector<Word*> words = iter->second;
+        for (auto wIter = words.begin(); wIter != words.end(); ++wIter)
+        {
+            Word* pWord = *wIter;
+            if (pWord->GetWord() == word)
+                return pWord;
+        }
+    }
+    return NULL;
 }
 
 }

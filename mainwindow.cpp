@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <QLayout>
 #include <QGridLayout>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -49,9 +50,20 @@ void MainWindow::ShowAddEnglishWord()
 
 void MainWindow::AddEnglishWord(QString &en, QString &chinese)
 {
-    m_db->AddWord(en.toStdString(), chinese.toStdString());
-    m_db->Save(std::string("test.json"));
-
+    if (!m_db->AddWord(en.toStdString(), chinese.toStdString()))
+    {
+        QMessageBox msgBox;
+        QString msg= QString::fromUtf8("这个单词已经添加了! ");
+        msgBox.setText(msg);
+        msgBox.exec();
+//        QString msg= QString::fromUtf8("这个单词已经添加过！")+prjName;
+//        r=QMessageBox::information(this,QString::fromUtf8("删除确认"),msg,
+//                                 QMessageBox::Yes|QMessageBox::No);
+    }
+    else
+    {
+        m_db->Save(std::string("test.json"));
+    }
 }
 
 
