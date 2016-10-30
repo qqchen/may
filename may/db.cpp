@@ -110,7 +110,7 @@ void JsonDB::AddWord(std::string &word, std::string &meaning)
 {
     std::cout << "[Json::AddWord] : " << word << ", " << meaning << std::endl;
 
-    std::string date = Date::CurrentDate().toString();
+    std::string date = Date::CurrentDate().toDateString();
     std::cout << "[Json::AddWord] : current date : " << date << std::endl;
 
     auto iter = m_datas.find(date);
