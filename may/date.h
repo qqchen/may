@@ -10,6 +10,7 @@ class Date
 public:
     Date();
     Date(int year, int mon, int day, int hour, int minute);
+    // 以字符串的形式传入：年/月/日/时/分
     Date(std::string& date);
     static Date CurrentDate();
     // 返回 年/月/日/时/分

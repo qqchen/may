@@ -5,6 +5,8 @@ namespace may {
 app::app()
 {
     m_db = new JsonDB();
+    m_randomTest = new RandomTest<std::string, std::vector<Word*>>();
+    m_dateTest   = new DateTest<std::string, std::vector<Word*>>();
 
 }
 

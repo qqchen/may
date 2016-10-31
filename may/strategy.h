@@ -9,29 +9,39 @@ namespace may {
 /**************************************
  * 用于描述学习策略，如随机测试、按天测试
  * ************************************/
+template<typename T1, typename T2>
 class Strategy
 {
 public:
-    Strategy();
-    virtual bool GetWords(std::vector<std::string>& words, std::vector<std::string>& meanings) = 0;
+    Strategy() {}
+    virtual bool GetWordsByKey(T1& key, std::vector<T1>& words, std::vector<T1>& meanings, std::map<T1, T2>& data) = 0;
 };
 
-class RandomTest : public Strategy
+template<typename T1, typename T2>
+class RandomTest : public Strategy<T1, T2>
 {
 public:
-    RandomTest();
-    ~RandomTest();
-    virtual bool GetWords(std::vector<std::string>& words, std::vector<std::string>& meanings);
+    RandomTest() {}
+    ~RandomTest() {}
+    // 通过key来决定随机提取已掌握的或者还未掌握的词
+    virtual bool GetWordsByKey(T1& key, std::vector<T1>& words, std::vector<T1>& meanings, std::map<T1, T2>& data)
+    {
+        return true;
+    }
 
 };
 
-class DateTest : public Strategy
+template<typename T1, typename T2>
+class DateTest : public Strategy<T1, T2>
 {
 public:
-    DateTest();
-    ~DateTest();
-    virtual bool GetWords(std::vector<std::string>& words, std::vector<std::string>& meanings);
-    bool GetWordsByDate(std::string& date, std::vector<std::string>& words, std::vector<std::string>& meanings);
+    DateTest() {}
+    ~DateTest() {}
+    // 按天取词
+    virtual bool GetWordsByKey(T1& key, std::vector<T1>& words, std::vector<T1>& meanings, std::map<T1, T2>& data)
+    {
+        return true;
+    }
 
 };
 

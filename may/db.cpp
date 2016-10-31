@@ -1,5 +1,6 @@
 #include "db.h"
 #include <iostream>
+#include <memory>
 
 namespace may {
 
@@ -21,13 +22,14 @@ JsonDB::~JsonDB()
 {
     for (auto iter = m_datas.begin(); iter != m_datas.end(); ++iter)
     {
-        std::vector<Word*>& words = iter->second;
-        for (auto wIter = words.begin(); wIter != words.end(); ++wIter)
-        {
-            Word* pWord = *wIter;
-            delete pWord;
-            pWord = NULL;
-        }
+        //std::shared_ptr<Word>
+        std::vector<std::shared_ptr<Word>>& words = iter->second;
+//        for (auto wIter = words.begin(); wIter != words.end(); ++wIter)
+//        {
+//            std::shared_ptr<Word> pWord = *wIter;
+//            delete pWord;
+//            pWord = NULL;
+//        }
         words.clear();
     }
     m_datas.clear();
@@ -54,14 +56,14 @@ Json::Value JsonDB::serialize()
     for (auto iter = m_datas.begin(); iter != m_datas.end(); ++iter)
     {
         std::string date = iter->first;
-        std::vector<Word*>& oneDateData = iter->second;
+        std::vector<std::shared_ptr<Word>>& oneDateData = iter->second;
         if (date.empty() || oneDateData.empty())
             continue;
 
         Json::Value wordVal;
         for (size_t  i = 0; i < oneDateData.size(); ++i)
         {
-            Word* pWord = oneDateData[i];
+            std::shared_ptr<Word> pWord = oneDateData[i];
             if (pWord != NULL)
                 wordVal.append(pWord->serialize());
         }
@@ -87,20 +89,20 @@ bool JsonDB::deserialize(Json::Value root)
         if (dateVal.isNull() || wordVal.isNull())
             continue;
         std::string date = dateVal.asString();
-        std::vector<Word*> oneDateWords;
+        std::vector<std::shared_ptr<Word>> oneDateWords;
         for (auto j = 0; j < wordVal.size(); ++j)
         {
             Json::Value oneWordVal = wordVal[j];
             if (oneWordVal.isNull())
                 continue;
-            Word* pWord = new Word();
+            std::shared_ptr<Word> pWord(new Word());
             pWord->deserialize(oneWordVal);
             oneDateWords.push_back(pWord);
         }
         //std::cout << "[JsonDB::deserialize] : " << date << " " << oneDateWords.size() << std::endl;
         if (date.empty() || oneDateWords.empty())
             continue;
-        m_datas.insert(std::pair<std::string, std::vector<Word*> >(date, oneDateWords));
+        m_datas.insert(std::pair<std::string, std::vector<std::shared_ptr<Word>> >(date, oneDateWords));
     }
 
     return true;
@@ -118,19 +120,19 @@ bool JsonDB::AddWord(std::string &word, std::string &meaning)
     auto iter = m_datas.find(date);
     if (iter != m_datas.end())
     {
-        std::vector<Word*>& words = iter->second;
-        Word* pWord = new Word(word, meaning);
+        std::vector<std::shared_ptr<Word>>& words = iter->second;
+        std::shared_ptr<Word> pWord(new Word(word, meaning));
         if(pWord != NULL)
             words.push_back(pWord);
     }
     else
     {
-        std::vector<Word*> words;
-        Word* pWord = new Word(word, meaning);
+        std::vector<std::shared_ptr<Word>> words;
+        std::shared_ptr<Word> pWord(new Word(word, meaning));
         if(pWord != NULL)
         {
             words.push_back(pWord);
-            m_datas.insert(std::pair<std::string, std::vector<Word*> >(date, words));
+            m_datas.insert(std::pair<std::string, std::vector<std::shared_ptr<Word>> >(date, words));
         }
     }
     return true;
@@ -138,18 +140,18 @@ bool JsonDB::AddWord(std::string &word, std::string &meaning)
 
 bool JsonDB::HasWord(std::string &word)
 {
-    Word* pWord = FindWord(word);
+    std::shared_ptr<Word> pWord = FindWord(word);
     return pWord != NULL;
 }
 
-Word *JsonDB::FindWord(std::string &word)
+std::shared_ptr<Word> JsonDB::FindWord(std::string &word)
 {
     for(auto iter = m_datas.begin(); iter != m_datas.end(); ++iter)
     {
-        std::vector<Word*> words = iter->second;
+        std::vector<std::shared_ptr<Word>> words = iter->second;
         for (auto wIter = words.begin(); wIter != words.end(); ++wIter)
         {
-            Word* pWord = *wIter;
+            std::shared_ptr<Word> pWord = *wIter;
             if (pWord->GetWord() == word)
                 return pWord;
         }

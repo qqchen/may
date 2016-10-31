@@ -2,12 +2,13 @@
 #define APP_H
 
 #include "db.h"
-
+#include "strategy.h"
 namespace may {
 
 class app
 {
 public:
+    typedef Strategy<std::string, std::vector<Word*>> LearningStrategy;
     app();
     ~app();
     bool Load(std::string &dbfile);
@@ -16,6 +17,8 @@ public:
 
 private:
     DB* m_db;
+    LearningStrategy* m_randomTest;
+    LearningStrategy* m_dateTest;
 };
 
 }

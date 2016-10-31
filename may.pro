@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     third/jsoncpp/lib_json/json_writer.cpp \
     addworddialog.cpp \
     may/app.cpp \
-    may/strategy.cpp
+    may/strategy.cpp \
+    may/utils.cpp
 
 HEADERS  += mainwindow.h \
     may/config.h \
@@ -46,7 +47,8 @@ HEADERS  += mainwindow.h \
     third/jsoncpp/lib_json/version.h.in \
     addworddialog.h \
     may/app.h \
-    may/strategy.h
+    may/strategy.h \
+    may/utils.h
 
 INCLUDEPATH += . third/jsoncpp/include third/jsoncpp/include/json
 

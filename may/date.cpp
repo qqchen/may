@@ -4,6 +4,8 @@
 #include <chrono>
 #include <iostream>
 #include <assert.h>
+#include <string>
+#include "utils.h"
 
 namespace may {
 
@@ -24,7 +26,22 @@ Date::Date(int year, int mon, int day, int hour, int minute)
 
 Date::Date(std::string& date)
 {
+    std::vector<std::string> items;
+    splitString(date, '/', items);
+    assert(items.size() == 5); // 年/月/日/时/分
+    std::vector<int> nums;
+    for (size_t i = 0; i < items.size(); ++i)
+    {
+        int num = 0;
+        toInt(items[i], num);
+        nums.push_back(num);
+    }
 
+    m_year = nums[0];
+    m_month = nums[1];
+    m_day = nums[2];
+    m_hour = nums[3];
+    m_minute = nums[4];
 }
 
 Date Date::CurrentDate()

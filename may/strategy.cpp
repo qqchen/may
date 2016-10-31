@@ -2,52 +2,54 @@
 
 namespace may {
 
-Strategy::Strategy()
-{
+//template<typename T1, typename T2>
+//Strategy<T1, T2>::Strategy()
+//{
 
-}
+//}
 
-//////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-RandomTest::RandomTest()
-{
+//template<typename T1, typename T2>
+//RandomTest<T1, T2>::RandomTest()
+//{
 
-}
+//}
 
-RandomTest::~RandomTest()
-{
+//template<typename T1, typename T2>
+//RandomTest<T1, T2>::~RandomTest()
+//{
 
-}
+//}
 
-bool RandomTest::GetWords(std::vector<std::string> &words, std::vector<std::string> &meanings)
-{
-    return true;
-}
+//template<typename T1, typename T2>
+//bool RandomTest<T1, T2>::GetWordsByKey(T1 &key, std::vector<T1> &words, std::vector<T1> &meanings, std::map<T1, T2>& data)
+//{
+//    return true;
+//}
 
-//////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-DateTest::DateTest()
-{
+//template<typename T1, typename T2>
+//DateTest<T1, T2>::DateTest()
+//{
 
-}
+//}
 
-DateTest::~DateTest()
-{
+//template<typename T1, typename T2>
+//DateTest<T1, T2>::~DateTest()
+//{
 
-}
+//}
 
-bool DateTest::GetWords(std::vector<std::string> &words, std::vector<std::string> &meanings)
-{
-    return true;
-}
-
-bool DateTest::GetWordsByDate(std::string &date, std::vector<std::string> &words, std::vector<std::string> &meanings)
-{
-    return true;
-}
+//template<typename T1, typename T2>
+//bool DateTest<T1, T2>::GetWordsByKey(T1 &key, std::vector<T1> &words, std::vector<T1> &meanings, std::map<T1, T2>& data)
+//{
+//    return true;
+//}
 
 }
