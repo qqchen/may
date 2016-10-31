@@ -159,5 +159,25 @@ std::shared_ptr<Word> JsonDB::FindWord(std::string &word)
     return NULL;
 }
 
+const DB::DataMap& JsonDB::GetDatas()
+{
+    return m_datas;
+}
+
+std::vector<std::string> JsonDB::GetDates()
+{
+    std::vector<std::string> dates;
+    for(auto iter = m_datas.begin(); iter != m_datas.end(); ++iter)
+    {
+        dates.push_back(iter->first);
+    }
+    return dates;
+}
+
+//const JsonDB::DataMap& JsonDB::GetDatas()
+//{
+//    return m_datas;
+//}
+
 }
 
